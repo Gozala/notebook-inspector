@@ -49,9 +49,15 @@ export function* gettersof(object) {
   let proto = getPrototypeOf(object)
   while (proto) {
     for (const key of fieldsof(proto)) {
-      const property = propertyof(proto, key)
-      if (property.get) {
-        yield key
+      switch (key) {
+        case "__proto__":
+          break
+        default: {
+          const property = propertyof(proto, key)
+          if (property.get) {
+            yield key
+          }
+        }
       }
     }
 
